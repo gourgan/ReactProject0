@@ -1,15 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 import Button from "./component/Button/Button";
 
 function App() {
+  const  [nbClick, setNbClick] = useState(0);
+
   return (
     <div className="App">
+      Hello : {nbClick}
       <Button
         text="Mon button"
         bgColor="Grey"
         clickEvent={(arg: any) => {
-          console.log(arg);
+          setNbClick(nbClick + 1);
+          console.log(nbClick);
         }}
         type="submit"
         color="red"

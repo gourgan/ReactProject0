@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Button.module.css";
 import PropTypes from "prop-types";
 function Button(props) {
+  const [clicked, setClicked] = useState(false);
   return (
     <button
       className={style.Button}
@@ -12,12 +13,18 @@ function Button(props) {
         color: props.color,
       }}
       onClick={(args) => {
+        setClicked(true);
+        setTimeout(() => {
+          setClicked(false);
+        }, 1000);
         props.clickEvent("hello");
       }}
     >
       {props.text}
       <br />
       {props.children}
+      <br />
+      {clicked ? "Clicked" : "Unclicked"}
     </button>
   );
 }

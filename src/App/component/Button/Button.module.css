@@ -10,3 +10,7 @@
   margin-bottom: 20px;
   cursor: pointer;
 }
+.Button.clicked{
+    box-shadow: 10px 10px 15px grey;
+    border: outset yellow;
+}
