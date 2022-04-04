@@ -5,7 +5,7 @@ function Button(props) {
   const [clicked, setClicked] = useState(false);
   return (
     <button
-      className={style.Button}
+      className={`${style.Button}${clicked ? " " + style.clicked : ""}`}
       type={props.type}
       style={{
         ...props.style,
@@ -14,9 +14,9 @@ function Button(props) {
       }}
       onClick={(args) => {
         setClicked(true);
-        setTimeout(() => {
+        /*setTimeout(() => {
           setClicked(false);
-        }, 1000);
+        }, 1000);*/
         props.clickEvent("hello");
       }}
     >
