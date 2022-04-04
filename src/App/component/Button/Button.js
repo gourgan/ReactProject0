@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Button.module.css";
 import PropTypes from "prop-types";
 function Button(props) {
+  //State management
   const [clicked, setClicked] = useState(false);
+  //Change detection on clicked
+  useEffect(()=>{
+    if(clicked){
+        setTimeout(() => {
+            setClicked(false);
+        }, 700);
+    }
+  }, [clicked]);
+  //did mount event
+  useEffect(()=>{
+      console.log('Le composent est monté')
+  }, []);
+
   return (
     <button
       className={`${style.Button}${clicked ? " " + style.clicked : ""}`}
@@ -14,9 +28,6 @@ function Button(props) {
       }}
       onClick={(args) => {
         setClicked(true);
-        /*setTimeout(() => {
-          setClicked(false);
-        }, 1000);*/
         props.clickEvent("hello");
       }}
     >
