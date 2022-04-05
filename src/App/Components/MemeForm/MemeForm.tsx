@@ -12,7 +12,11 @@ interface I_MemeFormProps {
 const MemeForm: React.FC<I_MemeFormProps> = (props) => {
   return (
     <div className={style.MemeForm} data-testid="MemeForm">
-      <form>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <input
           type="text"
           name="memeText"
