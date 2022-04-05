@@ -20,6 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "createFunc": "npx generate-react-cli c --type=hookedFunc",
+    "createLayout": "npx generate-react-cli c --type=layoutFunc",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
