@@ -1,83 +1,89 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import style from "./App.module.css";
-//import Button from "./Components/Button/Button";
-import FlexWLayout from "./Components/layouts/FlexWLayout/FlexWLayout";
-import MemeForm from "./Components/MemeForm/MemeForm";
-import MemeViewer from "./Components/MemeViewer/MemeViewer";
-import { I_Meme, DummyMeme as initialMeme, I_Image } from "./interfaces/meme";
+import FlexHLayout from "./components/layouts/FlexHLayout/FlexHLayout";
+import FlexWLayout from "./components/layouts/FlexWLayout/FlexWLayout";
+import MemeForm from "./components/MemeForm/MemeForm";
+import MemeThumbnail from "./components/MemeThumbnail/MemeThumbnail";
+import MemeViewer from "./components/MemeViewer/MemeViewer";
+import Navbar from "./components/Navbar/Navbar";
+import {
+  Route,
+  Switch,
+  Link,
+  useParams,
+  useLocation,
+  useHistory,
+  withRouter,
+} from "react-router-dom";
+import { connect } from "react-redux";
+import { DummyMeme, I_Meme } from "./interfaces/common";
+import { CURRENT_ACTIONS } from "./store/store";
+import Modal from "./components/Modal/Modal";
+import Listpdf from "./components/Listpdf/Listpdf";
 
 interface I_AppProps {
   AppName?: string;
 }
-
-interface I_AppState {
-  counter: number;
-  oneValue: string;
-  currentMeme: I_Meme;
-  images: Array<I_Image>;
-}
-
-class App extends Component<I_AppProps, I_AppState> {
-  constructor(props: I_AppProps) {
-    super(props);
-    this.state = {
-      counter: 0,
-      oneValue: "Hello",
-      currentMeme: initialMeme,
-      images: [
-        {
-          id: 0,
-          url: "imgTest.jpg",
-          w: 1200,
-          h: 675,
-          name: "test",
-        },
-      ],
-    };
-  }
-
-  componentDidMount() {
-    console.log(
-      "%c%s",
-      "font-size:24pt;color:green;font-weight:900;text-align:center",
-      "⚠⚠ Le component est monté ⚠⚠"
-    );
-  }
-  componentDidUpdate(oldProps: I_AppProps, oldState: I_AppState) {
-    console.log(
-      "%c%s",
-      "font-size:24pt;color:red;font-weight:900;text-align:center",
-      "============Updates================"
-    );
-    console.log("Props => ", oldProps, this.props);
-    console.log("States => ", oldState, this.state);
-  }
+class App extends Component<I_AppProps> {
   render(): React.ReactNode {
     return (
-      <div className={style.App}>
-        {JSON.stringify(this.state)}
-        <FlexWLayout>
-          <div>
-            <MemeViewer
-              meme={this.state.currentMeme}
-              image={this.state.images.find(
-                (e) => e.id === this.state.currentMeme.imageId
-              )}
-            />
-          </div>
-          <MemeForm
-            currentMeme={this.state.currentMeme}
-            images={this.state.images}
-            onInputValueChange={(changedValuesObject: any) => {
-              this.setState({
-                currentMeme: { ...this.state.currentMeme, ...changedValuesObject },
-              });
-            }}
-          />
-        </FlexWLayout>
-      </div>
+      <>
+        <div className={style.App}>
+          <FlexHLayout>
+            <div className={style.header}>Meme Generator . react</div>
+            <Navbar />
+            <Switch>
+              <Route path="/" exact>
+                <div className={style.home}>Page d'accueil</div>
+              </Route>
+              <Route path="/listPDF" exact component={Listpdf} />
+              <Route path="/editor" exact component={RoutedEditor} />
+              <Route path="/editor/:id" component={RoutedEditor} />
+              <Route path="/thumbnail">
+                <MemeThumbnail />
+              </Route>
+              <Route path="/">
+                <div className={style.Erreur}>Page Innexistante</div>
+              </Route>
+            </Switch>
+          </FlexHLayout>
+        </div>
+        <Modal />
+      </>
     );
   }
 }
-
+function Editor(props: any) {
+  console.log(props);
+  useEffect(() => {
+    props.update(
+      props.memes.find((m: I_Meme) => m.id === parseInt(props.match.params.id))
+    );
+    return () => {
+      props.update(undefined);
+    };
+  }, [props]);
+  return (
+    <FlexWLayout>
+      <div>
+        <MemeViewer />
+      </div>
+      <MemeForm />
+    </FlexWLayout>
+  );
+}
+function mstp(state: any, own: any) {
+  return { ...own, memes: state.ressources.memes };
+}
+function mdtp(dispatch: Function) {
+  return {
+    update: (meme: I_Meme | undefined) => {
+      dispatch({
+        type: CURRENT_ACTIONS.UPDATE_CURRENT,
+        value: meme ? meme : DummyMeme,
+      });
+    },
+  };
+}
+const RoutedEditor = withRouter(connect(mstp, mdtp)(Editor));
 export default App;

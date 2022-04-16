@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import style from "./FlexWLayout.module.css";
+import style from "./FlexWLayout.module.scss";
 
 const FlexWLayout = (props) => {
   return (
@@ -10,7 +10,7 @@ const FlexWLayout = (props) => {
   );
 };
 FlexWLayout.propTypes = {
-  children:PropTypes.any.isRequired,
+  children:PropTypes.array.isRequired,
 };
 FlexWLayout.defaultProps = {
   children:<div>Children absents</div>

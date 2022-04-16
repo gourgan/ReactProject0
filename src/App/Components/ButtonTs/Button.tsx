@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import style from "./Button.module.css";
 import PropTypes from "prop-types";
 
-function Button(props) {
+interface I_ButtonProps{
+  lorsqueLeButtonEstClicked:Function
+  style?:object
+  bgColor:string
+  color:string
+  type:"button"|"submit"|"reset"|undefined
+}
+
+const Button : React.FC<I_ButtonProps>=(props)=>{
   //gestion d'une valeur etatique
   const [clicked, setClicked] = useState(false);
   //observation des changement /montage de la valeur
@@ -30,7 +38,7 @@ function Button(props) {
     </button>
   );
 }
-
+/*
 Button.propTypes = {
   lorsqueLeButtonEstClicked: PropTypes.func.isRequired,
   style: PropTypes.object,
@@ -38,7 +46,7 @@ Button.propTypes = {
   color: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
-};
+};*/
 Button.defaultProps = {
   lorsqueLeButtonEstClicked: () => {
     console.warn("Fonction du button undefined");

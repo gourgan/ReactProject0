@@ -1,34 +1,54 @@
 {
   "usesTypeScript": false,
   "usesCssModule": true,
-  "cssPreprocessor": "css",
+  "cssPreprocessor": "scss",
   "testLibrary": "Testing Library",
   "component": {
     "default": {
-      "path": "src/App/Components",
+      "path": "src/App/components",
       "withStyle": true,
       "withTest": true,
       "withStory": false,
       "withLazy": false
     },
-    "hookedFunc": {
+    "hookedFunc":{
       "path": "src/App/components",
       "withStyle": true,
       "withTest": true,
       "withStory": false,
       "withLazy": false,
-      "customTemplates": {
+      "customTemplates":{
         "component": "grc_templates/funcWithState/TemplateName.js"
       }
     },
-    "layoutFunc": {
+    "layoutFunc":{
       "path": "src/App/components/layouts",
       "withStyle": true,
       "withTest": true,
       "withStory": false,
       "withLazy": false,
-      "customTemplates": {
+      "customTemplates":{
         "component": "grc_templates/funcLayout/TemplateName.js"
+      }
+    },
+    "reduxFuncCmp":{
+      "path": "src/App/components",
+      "withStyle": true,
+      "withTest": true,
+      "withStory": false,
+      "withLazy": false,
+      "customTemplates":{
+        "component": "grc_templates/connectedFunc/TemplateName.tsx"
+      }
+    },
+    "brandClass":{
+      "path": "src/App/metier",
+      "withStyle": false,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": false,
+      "customTemplates":{
+        "component": "grc_templates/brandClass/TemplateName.js"
       }
     }
   }
